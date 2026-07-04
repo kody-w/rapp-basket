@@ -108,10 +108,11 @@ async function render(){
   const grid=$('grid'); grid.innerHTML='';
   for(const it of items){
     const el=document.createElement('div'); el.className='egg';
-    el.innerHTML=`<canvas width="150" height="150"></canvas><div class="t">${esc(it.title)}</div><div class="b">${esc(it.born)}</div><div class="row"><button data-a="dl">↓ .egg</button><button data-a="remix">🧬 breed</button><button data-a="rm">remove</button></div>`;
+    el.innerHTML=`<canvas width="150" height="150"></canvas><div class="t">${esc(it.title)}</div><div class="b">${esc(it.born)}</div><div class="row"><button data-a="talk" title="talk to it">💬 talk</button><button data-a="remix" title="breed at the Cabinet">🧬</button><button data-a="dl" title="download .egg">↓</button><button data-a="rm" title="remove">✕</button></div>`;
     grid.appendChild(el);
     drawIcon(el.querySelector('canvas'), it.egg.genome);
     el.querySelector('canvas').onclick=()=>preview(it.egg);
+    el.querySelector('[data-a=talk]').onclick=()=>window.open('https://kody-w.github.io/rapp-static-apis/companion/#'+b64url(JSON.stringify(it.egg)));
     el.querySelector('[data-a=dl]').onclick=()=>download(it.egg);
     el.querySelector('[data-a=remix]').onclick=()=>window.open('https://kody-w.github.io/rapp-static-apis/hologram/#remix='+b64url(JSON.stringify(it.egg)));
     el.querySelector('[data-a=rm]').onclick=async()=>{ await del(it.id); render(); status('removed'); };
